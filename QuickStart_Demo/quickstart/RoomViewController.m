@@ -203,7 +203,7 @@
     [self.rtcVideo setMaxVideoEncoderConfig:solution];
     
     ByteRTCVideoPreprocessorConfig *config = [[ByteRTCVideoPreprocessorConfig alloc] init];
-    config.required_pixel_format = ByteRTCVideoPixelFormatI420;
+    config.requiredPixelFormat = ByteRTCVideoPixelFormatI420;
     
     [self.rtcVideo registerLocalVideoProcessor: self.processor withConfig:config];
     

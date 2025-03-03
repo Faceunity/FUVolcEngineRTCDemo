@@ -79,6 +79,10 @@ typedef enum FUAITYPE {
 #define FUAITYPE_IMAGE_BEAUTY_UNKNOW 68719476736                   // 1<<36
 #define FUAITYPE_FACEPROCESSOR_LIPSOCCUSEGMENT 137438953472        // 1<<37
 #define FUAITYPE_FACEPROCESSOR_FACEOCCUSEGMENT 274877906944        // 1<<38
+#define FUAITYPE_FACEPROCESSOR_SKINSEGMENT 549755813888            // 1<<39
+#define FUAITYPE_FACEPROCESSOR_DELSPOT 1099511627776               // 1<<40
+#define FUAITYPE_FACEPROCESSOR_ARMESHV2 2199023255552              // 1<<41
+#define FUAITYPE_FACEPROCESSOR_RACE 4398046511104                  // 1<<42
 
 typedef enum FUAIGESTURETYPE {
   FUAIGESTURE_NO_HAND = -1,
@@ -210,9 +214,34 @@ typedef enum FUAIHUMANSEGMODE {
   FUAIHUMAN_SEG_GPU_MEETING = 0x02
 } FUAIHUMANSEGMODE;
 
+typedef enum FUAIHUMANMODELCONFIG {                   // human model config
+  FUAIHUMAN_SEG_CPU_COMM = FUAIHUMAN_SEG_CPU_COMMON,  //  default
+  FUAIHUMAN_SEG_GPU_COMM = FUAIHUMAN_SEG_GPU_COMMON,
+  FUAIHUMAN_SEG_GPU_MEET = FUAIHUMAN_SEG_GPU_MEETING,  // HumanSeg 0-7bit
+} FUAIHUMANMODELCONFIG;
+
+typedef enum FUAIHUMANALGORITHMCONFIG {  // human algorithm config
+  FUAIHUMAN_ENABLE_ALL = 0,
+  FUAIHUMAN_DISABLE_HUMAN_SEG = 1 << 0,
+} FUAIHUMANALGORITHMCONFIG;
+
+typedef enum FUAIFACEMODELCONFIG {  // face model config
+  FUAIFACE_ALL_DEFAULT = -1,
+} FUAIFACEMODELCONFIG;
+
+typedef enum FUAIFACEALGORITHMCONFIG {  // face algorithm config
+  FUAIFACE_ENABLE_ALL = 0,
+  FUAIFACE_DISABLE_FACE_OCCU = 1 << 0,
+  FUAIFACE_DISABLE_SKIN_SEG = 1 << 1,
+  FUAIFACE_DISABLE_DEL_SPOT = 1 << 2,
+  FUAIFACE_DISABLE_ARMESHV2 = 1 << 3,
+  FUAIFACE_DISABLE_RACE = 1 << 4,
+  FUAIFACE_DISABLE_LANDMARK_HP_OCCU = 1 << 5
+} FUAIFACEALGORITHMCONFIG;
+
 typedef enum FUAIMACHINETYPE {
-  FUAIMACHINE_LOW = 0,  //  low machine
-  FUAIMACHINE_HIGH = 1,//  high machine
+  FUAIMACHINE_LOW = 0,   //  low machine
+  FUAIMACHINE_HIGH = 1,  //  high machine
 } FUAIMACHINETYPE;
 
 typedef enum TRANSFORM_MATRIX {
@@ -280,6 +309,7 @@ typedef enum TRANSFORM_MATRIX {
 provides both a texture and an NV21 buffer as input.
 As the name suggests, this is the most efficient interface  on Android. */
 #define FU_FORMAT_ANDROID_DUAL_MODE 7
+#define FU_FORMAT_HARMONY_DUAL_MODE FU_FORMAT_ANDROID_DUAL_MODE
 typedef struct {
   int camera_id;  //<which camera should we use, 0 for front, 1 for back
 } TCameraDesc;
@@ -305,6 +335,8 @@ typedef struct {
   int tex;       //<the texture
   int flags;
 } TAndroidDualMode;
+
+typedef TAndroidDualMode THarmonyDualMode;
 /*\brief An I/O format where `ptr` points to a TNV12Buffer struct, which
  * describes a YpCbCr8BiPlanar buffer. It matches the YUV camera formats on iOS.
  */
@@ -400,8 +432,8 @@ typedef struct {
 #define NAMA_RENDER_OPTION_FLIP_X 0x1000
 #define NAMA_RENDER_OPTION_FLIP_Y 0x2000
 #define NAMA_NOCLEAR_CURRENT_FRAMEBUFFER 0x4000
+#define NAMA_RENDER_OPTION_FORCE_OUTPUT_ALPHA_ONE 0x8000
 #define NAMA_RENDER_OPTION_MASK 0xff000
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -1140,6 +1172,23 @@ FUNAMA_API int fuGetAIInfoRotated(int index, const char* name, void* pret,
                                   int num);
 
 FUNAMA_API void* fuGetFaceProcessorResult();
+
+/**
+ * \brief Get the detected race of face
+ *
+ * \param face_id index of face
+ * \return result: -1:unknow, 0:black, 1:white, 2:yellow, 3:brown
+ */
+FUNAMA_API int fuGetFaceRaceResult(int face_id);
+
+/**
+ * \brief enable or disable the RaceDetect,
+ *
+ * \param use 1 for enable, 0 for disable, default value is disable
+ * \return FUNAMA_API 1 for success, 0 for failure
+ */
+FUNAMA_API int fuSetUseFaceRaceDetect(bool use);
+
 /**
  \warning deprecated api
  \brief Set the quality-performance tradeoff.
@@ -1149,6 +1198,47 @@ FUNAMA_API void* fuGetFaceProcessorResult();
        The default quality is 1 (maximum quality).
 */
 FUNAMA_API void fuSetQualityTradeoff(float quality);
+
+/**
+ * @brief Get the dynamic quality.
+ *
+ * @param quality
+ * @return FUNAMA_API
+ */
+FUNAMA_API void fuGetDynamicQuality(float* quality);
+
+/**
+ * @brief Set the dynamic quality [0,1.0].
+ *
+ * @param quality
+ * @return FUNAMA_API
+ */
+FUNAMA_API void fuSetDynamicQuality(float quality);
+
+/**
+ * @brief set the params.
+ *
+ * @param trigger_fps the fps value which triggers the quality controller.
+ * bigger than 1, defualt is 25.
+ * @param quality_change_speed control the speed of quliaty change. bigger than
+ * 0,  defualt is 1.7.
+ * @param quality_change_smooth_time control the smoothness of qulaity change.
+ * bigger than 0, default is 2.5s.
+ * @return FUNAMA_API
+ */
+FUNAMA_API void fuSetDynamicQualityParams(float trigger_fps,
+                                          float quality_change_speed,
+                                          float quality_change_smooth_time);
+/**
+ * @brief Set Dynamic Quality Tradeoff, if enable, the quality of rendering
+ * will be adjust according to the fps automatically. default fps is 25. Should
+ * be enabled on machine level 1,-1
+ *
+ *
+ * @param enable true for enable, false for disable.
+ * @return FUNAMA_API
+ */
+FUNAMA_API void fuSetDynamicQualityControl(bool enable);
 
 /**
  \brief Set AI type for fuTrackFace and fuTrackFaceWithTongue interface
@@ -1545,6 +1635,11 @@ FUNAMA_API void fuFaceProcessorSetMinFaceRatio(float ratio);
 FUNAMA_API void fuFaceProcessorSetFaceLandmarkQuality(int quality);
 
 /**
+ * \brief Disable the complex visible model in face landmark algorithm
+ * \param  enable       true: turn on; false: turn off
+ */
+FUNAMA_API void fuFaceProcessorSetFaceLandmarkHpOccu(int enable);
+/**
  \brief set ai model FaceProcessor's detector mode.
  \param use, 0 for disable detect small face, 1 for enable detect small face
  */
@@ -1854,8 +1949,47 @@ FUNAMA_API void fuSetHandDetectEveryNFramesWhenNoHand(int frame_num);
 
 FUNAMA_API void fuSetHumanSegMode(FUAIHUMANSEGMODE flag);
 
+/**
+ \brief set face processor model config, ref to FUAIFACEMODELCONFIG
+*/
+FUNAMA_API void fuSetFaceModelConfig(long long flag);
+/**
+ \brief set face processor algorithm config, ref to FUAIFACEALGORITHMCONFIG ,
+ use to disable some sub-module while load face ai module, default is -1 which
+ disable all sub-modules.
+*/
+FUNAMA_API void fuSetFaceAlgorithmConfig(long long flag);
+
+/**
+ \brief set face processor model config, ref to FUAIHUMANMODELCONFIG, config cpu
+ or gpu mode,eth.
+ */
+FUNAMA_API void fuSetHumanModelConfig(long long flag);
+/**
+ \brief set human processor algorithm config, ref to FUAIHUMANALGORITHMCONFIG ,
+ use to disable some sub-module while load human ai module
+*/
+FUNAMA_API void fuSetHumanAlgorithmConfig(long long flag);
+
+/**
+ \brief force fu ai model to run on CPU
+*/
+FUNAMA_API void fuSetModelToCPU();
+
 FUNAMA_API void fuSetMachineType(FUAIMACHINETYPE flag);
 
+FUNAMA_API void fuSetMakeupCoverResource(bool is_cover);
+
+FUNAMA_API bool fuGetDelspotStatus();
+
+FUNAMA_API void fuSetARMeshV2(bool use);
+
+/**
+ * @brief get recommand device level.
+ *
+ * @return device_level , -99 for no recommendation
+ */
+FUNAMA_API int fuGetDeviceLevel();
 #ifdef __cplusplus
 }
 #endif

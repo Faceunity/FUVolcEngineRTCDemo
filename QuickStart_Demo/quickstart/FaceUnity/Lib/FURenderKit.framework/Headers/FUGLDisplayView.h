@@ -38,12 +38,11 @@ typedef NS_ENUM(NSInteger, FUGLDisplayViewContentMode) {
 
 @property (nonatomic, assign) FUGLDisplayViewContentMode contentMode;
 // 设置视频朝向，保证视频总是竖屏播放
-@property (nonatomic, assign) FUGLDisplayViewOrientation origintation;
+@property (nonatomic, assign) FUGLDisplayViewOrientation orientation;
 
 @property (nonatomic, weak) id<FUGLDisplayViewGestureDelegate> gestureDelegate;
 
-@property (nonatomic, assign) NSInteger disapplePointIndex ;
-@property (nonatomic,assign,readonly)  CGSize boundsSizeAtFrameBufferEpoch;
+@property (nonatomic, assign) NSInteger disapplePointIndex;
 
 @property (nonatomic, assign) BOOL alphaEnable;
 

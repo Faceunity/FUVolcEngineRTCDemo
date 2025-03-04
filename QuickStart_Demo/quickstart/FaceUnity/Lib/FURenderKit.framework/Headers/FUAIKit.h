@@ -32,6 +32,28 @@ typedef enum : NSUInteger {
     FUFaceProcessorFaceLandmarkQualityHigh
 } FUFaceProcessorFaceLandmarkQuality;
 
+/// 人脸模型设置
+typedef enum : NSInteger {
+    FUFaceModelConfigDefault = -1
+} FUFaceModelConfig;
+
+/// 人脸算法设置
+typedef enum : NSUInteger {
+    FUFaceAlgorithmConfigEnableAll          = 0,        // 打开全部效果
+    FUFaceAlgorithmConfigDisableFaceOccu    = 1 << 0,   // 关闭全脸分割
+    FUFaceAlgorithmConfigDisableSkinSeg     = 1 << 1,   // 关闭皮肤分割
+    FUFaceAlgorithmConfigDisableDelSpot     = 1 << 2,   // 关闭祛斑痘
+    FUFaceAlgorithmConfigDisableARMeshV2    = 1 << 3,   // 关闭 ARMeshV2
+    FUFaceAlgorithmConfigDisableRACE        = 1 << 4,   // 关闭人种分类
+    FUFaceAlgorithmConfigDisableLANDMARK_HP_OCCU = 1 << 5, //关闭高质量遮挡
+    
+    FUFaceAlgorithmConfigDisableFaceOccuAndSkinSeg  = FUFaceAlgorithmConfigDisableFaceOccu | FUFaceAlgorithmConfigDisableSkinSeg,
+    FUFaceAlgorithmConfigDisableFaceOccuAndDelSpot  = FUFaceAlgorithmConfigDisableFaceOccu | FUFaceAlgorithmConfigDisableDelSpot,
+    FUFaceAlgorithmConfigDisableSkinSegAndDelSpot   = FUFaceAlgorithmConfigDisableSkinSeg | FUFaceAlgorithmConfigDisableDelSpot,
+    FUFaceAlgorithmConfigDisableFaceOccuAndSkinSegAndDelSpot = FUFaceAlgorithmConfigDisableFaceOccu | FUFaceAlgorithmConfigDisableSkinSeg | FUFaceAlgorithmConfigDisableDelSpot,
+    FUFaceAlgorithmConfigDisableAll                 = FUFaceAlgorithmConfigDisableFaceOccu | FUFaceAlgorithmConfigDisableSkinSeg | FUFaceAlgorithmConfigDisableDelSpot | FUFaceAlgorithmConfigDisableARMeshV2 | FUFaceAlgorithmConfigDisableRACE | FUFaceAlgorithmConfigDisableLANDMARK_HP_OCCU
+} FUFaceAlgorithmConfig;
+
 /// 人体分割场景
 typedef enum : NSUInteger {
     FUHumanSegmentationSceneTypeMeeting = 0,    // 视频会议
@@ -45,6 +67,12 @@ typedef enum : NSUInteger {
     FUHumanSegmentationModeGPUMeeting = 0x02    // GPU会议模式
 } FUHumanSegmentationMode;
 
+/// 人体算法设置
+typedef enum : NSUInteger {
+    FUHumanAlgorithmConfigEnableAll     = 0,        // 打开全部效果
+    FUHumanAlgorithmConfigDisableSeg    = 1 << 0,   // 关闭人体分割
+} FUHumanAlgorithmConfig;
+
 @interface FUAIKit : NSObject
 
 @property (nonatomic, assign) int maxTrackFaces; // 设置最大的人脸跟踪个数 default is 1
@@ -57,13 +85,41 @@ typedef enum : NSUInteger {
 
 @property (nonatomic, assign) FUHumanProcessorDetectMode humanProcessorDetectMode;  // 人体检测模式，default is FUHumanProcessorDetectModeVideo
 
+@property (nonatomic, assign) BOOL faceProcessorSetFaceLandmarkHpOccu; // 遮挡点位是否使用高精度模型, 默认YES，YES 高精度模型，NO 通用模型
+
 @property (nonatomic, assign) BOOL faceProcessorDetectSmallFace; // 是否开启小脸检测，default is NO
 
 @property (nonatomic, assign) BOOL asyncTrackFace; //设置是否进行异步人脸跟踪
 
+@property (nonatomic, assign) BOOL faceRaceDetect; // 人种检测是否开启，默认关闭
+
 @property (nonatomic, assign) FUFaceProcessorFaceLandmarkQuality faceProcessorFaceLandmarkQuality;  // 人脸算法质量
 
 + (instancetype)shareKit;
+
+/// 人脸模型设置
+/// @param config 枚举值
+/// @note 必须在加载 AI 人脸模型之前设置
++ (void)setFaceModelConfig:(FUFaceModelConfig)config;
+
+/// 人脸算法设置
+/// @param config 枚举值
+/// @note 必须在加载 AI 人脸模型之前设置，默认 FUFaceAlgorithmConfigEnableAll
++ (void)setFaceAlgorithmConfig:(FUFaceAlgorithmConfig)config;
+
+/// 人体模型设置
+/// @param config 枚举值
+/// @note 必须在加载 AI 人体模型之前设置，默认 FUHumanSegmentationModeCPUCommon
++ (void)setHumanModelConfig:(FUHumanSegmentationMode)config;
+
+/// 人体算法设置
+/// @param config 枚举值
+/// @note 必须在加载 AI 人脸模型之前设置，默认 FUHumanAlgorithmConfigEnableAll
++ (void)setHumanAlgorithmConfig:(FUHumanAlgorithmConfig)config;
+
+/// 强制设置使用 CPU 运行 AI 模型
+/// @note 必须在加载 AI 模型之前设置
++ (void)setModelToCPU;
 
 /// 加载AI模型
 /// @param type AI类型
@@ -160,6 +216,14 @@ typedef enum : NSUInteger {
               pret:(float *)pret
             number:(int)number;
 
+
+/*
+ * 获取人种分类
+ * faceId 被检测的人脸 ID ，未开启多人检测时传 0
+ * return -1:unknow, 0:black, 1:white, 2:yellow, 3:brown
+ */
++ (int)getFaceRace:(int)faceId;
+
 /// 设置了InputCameraMatrix之后获取获取人脸信息
 + (int)getRotatedFaceInfo:(int)faceId
                      name:(NSString *)name
@@ -167,6 +231,7 @@ typedef enum : NSUInteger {
                    number:(int)number;
 
 /// 人脸检测置信度
+/// @param index 人脸索引
 + (float)fuFaceProcessorGetConfidenceScore:(int)index;
 
 /// 设置跟踪到人脸时每次检测的间隔帧数

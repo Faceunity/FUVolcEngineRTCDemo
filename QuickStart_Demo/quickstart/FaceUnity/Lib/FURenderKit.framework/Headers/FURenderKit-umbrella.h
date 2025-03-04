@@ -15,7 +15,6 @@
 #import "FUConfig.h"
 #import "FUAIConfig.h"
 #import "FUSetupConfig.h"
-#import "FUNormalConfig.h"
 #import "FUInternalCameraSetting.h"
 
 #import "FUKeysDefine.h"
@@ -70,6 +69,7 @@
 #import "FUCaptureCamera.h"
 #import "FUGLDisplayView.h"
 #import "FUGLContext.h"
+#import "FURenderQueue.h"
 
 #import "metamacros.h"
 #import "FUImageHelper.h"

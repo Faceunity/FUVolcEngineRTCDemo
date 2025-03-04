@@ -13,6 +13,7 @@
 
 - (ByteRTCVideoFrame* _Nullable)processVideoFrame:(ByteRTCVideoFrame* _Nonnull)src_frame{
     
+    NSLog(@"----%d",src_frame.rotation);
     [[FUDemoManager shared] checkAITrackedResult];
     if (![FUDemoManager shared].shouldRender) {
         return src_frame;
@@ -33,7 +34,20 @@
     FUImageBuffer imageBuffer = FUImageBufferMakeI420(buffer0, buffer1, buffer2, width, height, stride0,stride1, stride2);
     FURenderInput *input = [[FURenderInput alloc] init];
     input.imageBuffer = imageBuffer;
-    input.renderConfig.imageOrientation = FUImageOrientationRight;
+    switch (src_frame.rotation) {
+        case ByteRTCVideoRotation0:
+            input.renderConfig.imageOrientation = FUImageOrientationDown;
+            break;
+        case ByteRTCVideoRotation90:
+            input.renderConfig.imageOrientation = FUImageOrientationLeft;
+            break;
+        case ByteRTCVideoRotation180:
+            input.renderConfig.imageOrientation = FUImageOrientationUP;
+            break;
+        case ByteRTCVideoRotation270:
+            input.renderConfig.imageOrientation = FUImageOrientationRight;
+            break;
+    }
     //开启重力感应，内部会自动计算正确方向，设置fuSetDefaultRotationMode，无须外面设置
     input.renderConfig.gravityEnable = YES;
 

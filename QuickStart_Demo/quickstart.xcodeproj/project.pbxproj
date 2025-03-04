@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -77,10 +77,12 @@
 		2D5D61652A7A3443009CF707 /* stickers.json in Resources */ = {isa = PBXBuildFile; fileRef = 2D5D612B2A7A3443009CF707 /* stickers.json */; };
 		2D5D61662A7A3443009CF707 /* sdlu.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2D5D612C2A7A3443009CF707 /* sdlu.bundle */; };
 		2D5D61672A7A3443009CF707 /* sdlr.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2D5D612D2A7A3443009CF707 /* sdlr.bundle */; };
+		2DCBF94D2D3F7E200094D7D9 /* RealXBase.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCBF9492D3F7DEE0094D7D9 /* RealXBase.xcframework */; };
+		2DCBF94E2D3F7E200094D7D9 /* RealXBase.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCBF9492D3F7DEE0094D7D9 /* RealXBase.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2DCBF94F2D3F7E220094D7D9 /* VolcEngineRTC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCBF94A2D3F7DEE0094D7D9 /* VolcEngineRTC.xcframework */; };
+		2DCBF9502D3F7E220094D7D9 /* VolcEngineRTC.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCBF94A2D3F7DEE0094D7D9 /* VolcEngineRTC.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C5E08C7B2A5401E2005457FF /* CustomProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E08C7A2A5401E2005457FF /* CustomProcessor.m */; };
 		C5E08C7D2A54064B005457FF /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E08C7C2A54064A005457FF /* Accelerate.framework */; };
-		C5E08C7E2A540653005457FF /* VolcEngineRTCScreenCapturer.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC2AE8D426CB6C0A009D594D /* VolcEngineRTCScreenCapturer.xcframework */; };
-		C5E08C7F2A540653005457FF /* VolcEngineRTCScreenCapturer.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CC2AE8D426CB6C0A009D594D /* VolcEngineRTCScreenCapturer.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C5E08C812A54065E005457FF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E08C802A54065D005457FF /* AudioToolbox.framework */; };
 		C5E08C832A540664005457FF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E08C822A540664005457FF /* AVFoundation.framework */; };
 		C5E08C852A54066E005457FF /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E08C842A54066D005457FF /* CoreMedia.framework */; };
@@ -96,8 +98,6 @@
 		CC2AE8CD26CB6A24009D594D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CC2AE8CC26CB6A24009D594D /* main.m */; };
 		CC2AE8DB26CB9265009D594D /* RoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC2AE8DA26CB9265009D594D /* RoomViewController.m */; };
 		CC2AE90726CCE050009D594D /* UserLiveView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC2AE90626CCE050009D594D /* UserLiveView.m */; };
-		CC5DF54526CFB3D000BE223E /* VolcEngineRTC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC2AE8D526CB6C0A009D594D /* VolcEngineRTC.xcframework */; };
-		CC5DF54626CFB3D000BE223E /* VolcEngineRTC.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CC2AE8D526CB6C0A009D594D /* VolcEngineRTC.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CC6C6A1026CD32490041F9B0 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CC6C69F826CD32490041F9B0 /* NSLayoutConstraint+MASDebugAdditions.m */; };
 		CC6C6A1126CD32490041F9B0 /* ViewController+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CC6C6A0126CD32490041F9B0 /* ViewController+MASAdditions.m */; };
 		CC6C6A1226CD32490041F9B0 /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = CC6C6A0526CD32490041F9B0 /* MASCompositeConstraint.m */; };
@@ -117,9 +117,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				CC5DF54626CFB3D000BE223E /* VolcEngineRTC.xcframework in Embed Frameworks */,
-				C5E08C7F2A540653005457FF /* VolcEngineRTCScreenCapturer.xcframework in Embed Frameworks */,
 				2D2789632A7B7D2200FFD204 /* FURenderKit.framework in Embed Frameworks */,
+				2DCBF94E2D3F7E200094D7D9 /* RealXBase.xcframework in Embed Frameworks */,
+				2DCBF9502D3F7E220094D7D9 /* VolcEngineRTC.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -226,6 +226,8 @@
 		2D5D612C2A7A3443009CF707 /* sdlu.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = sdlu.bundle; sourceTree = "<group>"; };
 		2D5D612D2A7A3443009CF707 /* sdlr.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = sdlr.bundle; sourceTree = "<group>"; };
 		2D5D616A2A7A3461009CF707 /* authpack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = authpack.h; sourceTree = "<group>"; };
+		2DCBF9492D3F7DEE0094D7D9 /* RealXBase.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = RealXBase.xcframework; sourceTree = "<group>"; };
+		2DCBF94A2D3F7DEE0094D7D9 /* VolcEngineRTC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = VolcEngineRTC.xcframework; sourceTree = "<group>"; };
 		C5E08C792A5401E2005457FF /* CustomProcessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomProcessor.h; sourceTree = "<group>"; };
 		C5E08C7A2A5401E2005457FF /* CustomProcessor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomProcessor.m; sourceTree = "<group>"; };
 		C5E08C7C2A54064A005457FF /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
@@ -247,8 +249,6 @@
 		CC2AE8C926CB6A24009D594D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CC2AE8CB26CB6A24009D594D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CC2AE8CC26CB6A24009D594D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		CC2AE8D426CB6C0A009D594D /* VolcEngineRTCScreenCapturer.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = VolcEngineRTCScreenCapturer.xcframework; sourceTree = "<group>"; };
-		CC2AE8D526CB6C0A009D594D /* VolcEngineRTC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = VolcEngineRTC.xcframework; sourceTree = "<group>"; };
 		CC2AE8D826CB6C9A009D594D /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		CC2AE8D926CB9265009D594D /* RoomViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoomViewController.h; sourceTree = "<group>"; };
 		CC2AE8DA26CB9265009D594D /* RoomViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RoomViewController.m; sourceTree = "<group>"; };
@@ -288,15 +288,15 @@
 			files = (
 				C5E08C7D2A54064B005457FF /* Accelerate.framework in Frameworks */,
 				C5E08C892A54067A005457FF /* CoreMotion.framework in Frameworks */,
-				CC5DF54526CFB3D000BE223E /* VolcEngineRTC.xcframework in Frameworks */,
 				C5E08C8E2A540691005457FF /* VideoToolbox.framework in Frameworks */,
 				C5E08C832A540664005457FF /* AVFoundation.framework in Frameworks */,
 				C5E08C812A54065E005457FF /* AudioToolbox.framework in Frameworks */,
 				C5E08C8C2A540689005457FF /* SystemConfiguration.framework in Frameworks */,
 				2D2789622A7B7D2200FFD204 /* FURenderKit.framework in Frameworks */,
-				C5E08C7E2A540653005457FF /* VolcEngineRTCScreenCapturer.xcframework in Frameworks */,
 				C5E08C872A540674005457FF /* CoreML.framework in Frameworks */,
 				C5E08C852A54066E005457FF /* CoreMedia.framework in Frameworks */,
+				2DCBF94F2D3F7E220094D7D9 /* VolcEngineRTC.xcframework in Frameworks */,
+				2DCBF94D2D3F7E200094D7D9 /* RealXBase.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -606,8 +606,8 @@
 		CC2AE8D326CB6C0A009D594D /* VolcEngineRTC */ = {
 			isa = PBXGroup;
 			children = (
-				CC2AE8D426CB6C0A009D594D /* VolcEngineRTCScreenCapturer.xcframework */,
-				CC2AE8D526CB6C0A009D594D /* VolcEngineRTC.xcframework */,
+				2DCBF9492D3F7DEE0094D7D9 /* RealXBase.xcframework */,
+				2DCBF94A2D3F7DEE0094D7D9 /* VolcEngineRTC.xcframework */,
 			);
 			path = VolcEngineRTC;
 			sourceTree = "<group>";
@@ -972,10 +972,7 @@
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 35A6KD62ZJ;
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SRCROOT)/quickstart/VolcEngineRTC\"",
-					"$(PROJECT_DIR)/quickstart/FaceUnity/Lib",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/quickstart/FaceUnity/Lib";
 				INFOPLIST_FILE = quickstart/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1006,10 +1003,7 @@
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 35A6KD62ZJ;
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SRCROOT)/quickstart/VolcEngineRTC\"",
-					"$(PROJECT_DIR)/quickstart/FaceUnity/Lib",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/quickstart/FaceUnity/Lib";
 				INFOPLIST_FILE = quickstart/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
